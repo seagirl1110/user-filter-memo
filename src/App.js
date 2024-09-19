@@ -35,13 +35,15 @@ function App() {
 
   return (
     <div className="App">
+      <div className="count_container">
+        <span>Count: {count}</span>
+        <button onClick={() => setCount(count + 1)}>plus count</button>
+      </div>
       <input
         value={filterValue}
         onChange={(evt) => setFilterValue(evt.target.value)}
       />
       <UserList users={filteredUsers} />
-      <div> {count}</div>
-      <button onClick={() => setCount(count + 1)}>plus count</button>
     </div>
   );
 }
