@@ -1,5 +1,5 @@
 import './App.css';
-import React from 'react';
+import React, { useState } from 'react';
 import UserList from './components/userList';
 
 function App() {
@@ -16,9 +16,20 @@ function App() {
     { id: 10, name: 'Suzi' },
   ];
 
+  const [filterValue, setFilterValue] = useState('');
+
+  const filterUser = (value) =>
+    users.filter((user) =>
+      user.name.toLowerCase().includes(value.toLowerCase())
+    );
+
   return (
     <div className="App">
-      <UserList users={users} />
+      <input
+        value={filterValue}
+        onChange={(evt) => setFilterValue(evt.target.value)}
+      />
+      <UserList users={filterUser(filterValue)} />
     </div>
   );
 }
