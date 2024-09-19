@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import UserList from './components/userList';
 
 function App() {
@@ -17,11 +17,21 @@ function App() {
   ];
 
   const [filterValue, setFilterValue] = useState('');
+  const [count, setCount] = useState(0);
 
-  const filterUser = (value) =>
-    users.filter((user) =>
+  const filterUser = useCallback((value) => {
+    console.log('filter user');
+    return users.filter((user) =>
       user.name.toLowerCase().includes(value.toLowerCase())
     );
+  }, []);
+
+  const filteredUsers = useMemo(() => {
+    console.log('filtered users');
+    return filterUser(filterValue);
+  }, [filterValue, filterUser]);
+
+  console.log('render App - Count для проверки memoization userList');
 
   return (
     <div className="App">
@@ -29,7 +39,9 @@ function App() {
         value={filterValue}
         onChange={(evt) => setFilterValue(evt.target.value)}
       />
-      <UserList users={filterUser(filterValue)} />
+      <UserList users={filteredUsers} />
+      <div> {count}</div>
+      <button onClick={() => setCount(count + 1)}>plus count</button>
     </div>
   );
 }

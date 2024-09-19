@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 
 function UserList({ users }) {
+  console.log('render users');
+
   return (
     <div>
       {users.map((user) => (
@@ -15,4 +17,4 @@ UserList.propTypes = {
   users: PropTypes.array,
 };
 
-export default UserList;
+export default memo(UserList);
